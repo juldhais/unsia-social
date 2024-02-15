@@ -9,12 +9,12 @@
         </v-row>
         <v-btn block class="mb-5" variant="outlined">Change Profile Picture</v-btn>
         <v-chip size="large" class="mb-5" color="primary">@naruto</v-chip>
-        <v-text-field label="First Name" variant="outlined" />
-        <v-text-field label="Last Name" variant="outlined" />
-        <v-text-field label="Birth Date" type="date" variant="outlined" />
-        <v-select label="Gender" variant="outlined" :items="['Male', 'Female']">
+        <v-text-field label="First Name" variant="outlined" v-model="user.firstName" />
+        <v-text-field label="Last Name" variant="outlined" v-model="user.lastName" />
+        <v-text-field label="Birth Date" type="date" variant="outlined" v-model="user.birthDate" />
+        <v-select label="Gender" variant="outlined" :items="['Male', 'Female']" v-model="user.gender">
         </v-select>
-        <v-text-field label="Email" variant="outlined" />
+        <v-text-field label="Email" variant="outlined" v-model="user.email" />
         <v-btn block class="mb-5" variant="outlined">Change Password</v-btn>
 
         <hr class="mb-5">
@@ -28,4 +28,21 @@
 
 <script setup>
 import Sidebar from '@/components/Sidebar.vue';
+import { ref } from 'vue';
+import database from '../database';
+import { onMounted } from 'vue';
+
+const user = ref({
+  firstName: null,
+  lastName: null,
+  birthDate: null,
+  gender: null,
+  email: null,
+  password: null
+});
+
+onMounted(() => {
+  user.value = database.getCurrentUser();
+});
+
 </script>
